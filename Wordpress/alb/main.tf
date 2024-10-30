@@ -13,6 +13,7 @@ resource "aws_lb" "main" {
 
 resource "aws_lb_target_group" "main" {
   name     = "${var.alb_name}-tg"
+  target_type = "ip"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
@@ -40,6 +41,10 @@ resource "aws_lb_listener" "http" {
     type = "forward"
     target_group_arn = aws_lb_target_group.main.arn
   }
+
+  depends_on = [
+    aws_lb_target_group.main
+  ]
 }
 
 resource "aws_lb_listener_rule" "path_based_routing" {
@@ -56,4 +61,8 @@ resource "aws_lb_listener_rule" "path_based_routing" {
       values = ["/*"]
     }
   }
+
+  depends_on = [
+    aws_lb_listener.http
+  ]
 }

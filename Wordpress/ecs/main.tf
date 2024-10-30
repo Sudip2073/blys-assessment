@@ -32,43 +32,16 @@ resource "aws_ecs_service" "wordpress" {
 
 resource "aws_ecs_task_definition" "wordpress" {
   family                   = "wordpress"
-  network_mode             = "awsvpc"  # Use awsvpc for ALB integration
+  network_mode             = "awsvpc" 
   requires_compatibilities = ["FARGATE"]  # For Fargate launch type
   cpu                      = "256"  # CPU units
   memory                   = "512"  # Memory in MiB
 
-  container_definitions = jsonencode([
-    {
-      name      = "wordpress"
-      image     = "wordpress:latest"
-      essential = true
-      portMappings = [
-        {
-          containerPort = 80
-          hostPort      = 80
-          protocol      = "tcp"
-        }
-      ]
-      # environment = [
-      #   {
-      #     name  = "WORDPRESS_DB_HOST"
-      #     value = "${var.wordPress_db_host}"
-      #   },
-      #   {
-      #     name  = "WORDPRESS_DB_USER"
-      #     value = "${var.wordPress_db_user}"
-      #   },
-      #   {
-      #     name  = "WORDPRESS_DB_PASSWORD"
-      #     value = "${var.wordPress_db_password}"
-      #   },
-      #   {
-      #     name  = "WORDPRESS_DB_NAME"
-      #     value = "${var.wordPress_db_name}"
-      #   }
-      # ]
-    }
-  ])
+  container_definitions = file("${path.module}/template.json")
+  
+  volume {
+    name      = "db_data"
+  }
 
   tags = {
     Name = "wordpress-task"

@@ -10,6 +10,7 @@ resource "aws_subnet" "public" {
   count = length(var.availability_zones)
   vpc_id = aws_vpc.main.id
   cidr_block = cidrsubnet(var.vpc_cidr, 4, count.index)
+  availability_zone = var.availability_zones[count.index]
 
   tags = {
     Name = "public-subnet-${count.index}"
@@ -17,11 +18,11 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.my_vpc.id
+  vpc_id = aws_vpc.main.id
 }
 
 resource "aws_route_table" "public_route_table" {
-  vpc_id = aws_vpc.my_vpc.id
+  vpc_id = aws_vpc.main.id
 
   route {
     cidr_block = "0.0.0.0/0"
