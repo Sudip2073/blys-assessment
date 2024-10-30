@@ -29,3 +29,13 @@ resource "aws_cloudwatch_metric_alarm" "high_memory" {
     ServiceName = var.service_name
   }
 }
+
+resource "aws_cloudwatch_log_group" "wordpress_logs" {
+  name              = "/ecs/wordpress"
+  retention_in_days = 7 
+}
+
+resource "aws_cloudwatch_log_group" "mysql_logs" {
+  name              = "/ecs/mysql"
+  retention_in_days = 7 
+}

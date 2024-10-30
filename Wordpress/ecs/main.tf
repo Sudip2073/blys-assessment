@@ -33,10 +33,11 @@ resource "aws_ecs_service" "wordpress" {
 resource "aws_ecs_task_definition" "wordpress" {
   family                   = "wordpress"
   network_mode             = "awsvpc" 
-  requires_compatibilities = ["FARGATE"]  # For Fargate launch type
-  cpu                      = "256"  # CPU units
-  memory                   = "512"  # Memory in MiB
+  requires_compatibilities = ["FARGATE"] 
+  cpu                      = "256"  
+  memory                   = "512"  
 
+  execution_role_arn      = var.ecs_task_execution_role_arn
   container_definitions = file("${path.module}/template.json")
   
   volume {

@@ -12,6 +12,10 @@ module "alb" {
   alb_security_group  = module.vpc.aws_security_group
 }
 
+module "IAM" {
+  source = "./IAM"
+}
+
 module "ecs" {
   source = "./ecs"
   cluster_name = var.cluster_name
@@ -19,6 +23,7 @@ module "ecs" {
   alb_target_group_arn = module.alb.target_group_arn
   ecs_security_group = module.vpc.aws_security_group
   public_subnets = module.vpc.public_subnets
+  ecs_task_execution_role_arn = module.IAM.ecs_task_execution_role_arn
 }
 
 module "cloudwatch" {
