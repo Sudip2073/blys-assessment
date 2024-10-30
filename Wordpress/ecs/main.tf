@@ -28,9 +28,6 @@ resource "aws_ecs_service" "wordpress" {
     container_port   = 80
   }
   
-  depends_on = [
-    aws_lb_listener.http,
-  ]
 }
 
 resource "aws_ecs_task_definition" "wordpress" {

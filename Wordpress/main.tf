@@ -17,7 +17,7 @@ module "ecs" {
   cluster_name = var.cluster_name
   service_name = var.service_name
   alb_target_group_arn = module.alb.target_group_arn
-  # vpc_id = module.vpc.vpc_id
+  ecs_security_group = module.vpc.aws_security_group
   public_subnets = module.vpc.public_subnets
 }
 
@@ -25,7 +25,6 @@ module "cloudwatch" {
   source = "./cloudwatch"
   cluster_name = var.cluster_name
   service_name = var.service_name
-  notification_email = var.notification_email
 }
 
 output "alb_dns_name" {
