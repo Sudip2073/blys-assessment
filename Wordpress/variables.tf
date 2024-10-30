@@ -26,6 +26,3 @@ variable "service_name" {
   default = "Wordpress-service"
 }
 
-variable "notification_email" {
-  default = "Wordpress-service@blys.com"
-}

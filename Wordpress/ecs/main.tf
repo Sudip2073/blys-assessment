@@ -14,9 +14,11 @@ resource "aws_ecs_service" "wordpress" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.wordpress.arn
   desired_count   = var.desired_count
-  
+  launch_type     = "FARGATE" 
+
   network_configuration {
     subnets = var.public_subnets
+    security_groups  = [var.ecs_security_group]
     assign_public_ip = true
   }
   
@@ -25,6 +27,10 @@ resource "aws_ecs_service" "wordpress" {
     container_name   = "wordpress"
     container_port   = 80
   }
+  
+  depends_on = [
+    aws_lb_listener.http,
+  ]
 }
 
 resource "aws_ecs_task_definition" "wordpress" {

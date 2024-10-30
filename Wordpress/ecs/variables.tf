@@ -18,3 +18,8 @@ variable "alb_target_group_arn" {
 variable "desired_count" {
   default = "2"
 }
+
+variable "ecs_security_group" {
+  description = "Security group for the ECS service"
+  type        = string
+}
