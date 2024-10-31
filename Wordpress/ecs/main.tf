@@ -15,7 +15,7 @@ resource "aws_ecs_service" "wordpress" {
   task_definition = aws_ecs_task_definition.wordpress.arn
   desired_count   = var.desired_count
   launch_type     = "FARGATE" 
-
+  enable_execute_command = true
   network_configuration {
     subnets = var.public_subnets
     security_groups  = [var.ecs_security_group]
@@ -36,10 +36,11 @@ resource "aws_ecs_task_definition" "wordpress" {
   requires_compatibilities = ["FARGATE"] 
   cpu                      = "256"  
   memory                   = "512"  
-
+  
+  task_role_arn       = var.ecs_task_execution_role_arn
   execution_role_arn      = var.ecs_task_execution_role_arn
   container_definitions = file("${path.module}/template.json")
-  
+
   volume {
     name      = "db_data"
   }
