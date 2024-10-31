@@ -9,3 +9,7 @@ output "public_subnets" {
 output "aws_security_group" {
   value = aws_security_group.alb_sg.id
 }
+
+output "aws_security_group_container" {
+  value = aws_security_group.container_sg.id
+}

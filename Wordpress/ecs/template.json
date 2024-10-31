@@ -13,7 +13,7 @@
     "environment": [
       {
         "name": "WORDPRESS_DB_HOST",
-        "value": "localhost:3306"
+        "value": "wordpress-db:3306"
       },
       {
         "name": "WORDPRESS_DB_USER",

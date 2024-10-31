@@ -21,7 +21,7 @@ module "ecs" {
   cluster_name = var.cluster_name
   service_name = var.service_name
   alb_target_group_arn = module.alb.target_group_arn
-  ecs_security_group = module.vpc.aws_security_group
+  ecs_security_group = module.vpc.aws_security_group_container
   public_subnets = module.vpc.public_subnets
   ecs_task_execution_role_arn = module.IAM.ecs_task_execution_role_arn
 }
